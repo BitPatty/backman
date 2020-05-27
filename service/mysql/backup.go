@@ -48,12 +48,7 @@ func Backup(ctx context.Context, s3 *s3.Client, service util.Service, binding *c
 	command = append(command, credentials.Port)
 	command = append(command, "-u")
 	command = append(command, credentials.Username)
-	if len(credentials.Database) > 0 {
-		command = append(command, "--databases")
-		command = append(command, credentials.Database)
-	} else {
-		command = append(command, "--all-databases")
-	}
+	command = append(command, credentials.Database)
 
 	log.Debugf("executing mysql backup command: %v", strings.Join(command, " "))
 	cmd := exec.CommandContext(ctx, command[0], command[1:]...)
