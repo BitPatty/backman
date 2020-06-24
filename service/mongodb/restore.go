@@ -30,7 +30,12 @@ func Restore(ctx context.Context, s3 *s3.Client, service util.Service, binding *
 	var command []string
 	command = append(command, "mongorestore")
 	command = append(command, "--uri")
-	command = append(command, uri)
+	command = append(command, "\""+uri+"\"")
+ 	command = append(command, "--nsFrom")
+ 	command = append(command, "\"$prefix$.$suffix$\"")
+ 	command = append(command, "--nsTo")
+ 	command = append(command, "\"" + database + ".$suffix$\"")
+	command = append(command, "--drop")
 	command = append(command, "--gzip")
 	command = append(command, "--archive")
 
